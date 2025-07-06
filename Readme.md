@@ -7,3 +7,5 @@ Hey, I'm starting this repository to explore image depth analysis using various 
 <div align="center">
   <img src="./depth.png" alt="Depth Scan Example" width="100%">
 </div>
+
+### Added simple steup to get video stream from raspberry pi to the google colab
