@@ -1,0 +1,16 @@
+# This file tells the cloudflared service how to route traffic.
+# The tunnel name must match the one you created with 'cloudflared tunnel create'.
+tunnel: <YOUR-TUNNEL-NAME-HERE>
+
+# The path to the credentials file generated when you created the tunnel.
+# This path should point to the file inside /etc/cloudflared/
+credentials-file: /etc/cloudflared/<YOUR-TUNNEL-UUID>.json
+
+# Ingress rules define how traffic is routed to your local services.
+ingress:
+  # It directs traffic from your public hostname to your local video server.
+  - hostname: <subdomain.your-domain.com>
+    service: http://localhost:5000
+
+  # It ensures that any other requests to your tunnel result in a 404 error.
+  - service: http_status:404

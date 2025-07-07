@@ -3,10 +3,10 @@
 from IPython.display import Image, display
 
 
-NGROK_URL = "https://<Your ADDRESS>.ngrok-free.app"
+Stream_URL = "https://<Your Tunnel ADDRESS>"
 # ----------------------------------------------------
 
-video_url = f"{NGROK_URL}/video_feed"
+video_url = f"{Stream_URL}/video"
 
 
 print(f"Connecting to: {video_url}")
