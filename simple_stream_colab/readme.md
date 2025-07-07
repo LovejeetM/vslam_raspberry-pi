@@ -62,7 +62,7 @@ You will need two separate SSH windows connected to your Pi for this.
 
 -   **In Terminal 2**, start the ngrok tunnel to expose port 5000:
     ```bash
-    ./ngrok http 5000
+    ngrok http 5000
     ```
 
 3.  `ngrok` will display a public URL in the terminal (e.g., `https://<random-string>.ngrok-free.app`). **Copy this URL.**
