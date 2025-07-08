@@ -1,7 +1,8 @@
 # You can run this script inside the raspberry pi to create a server using flask which streams video
 # to the local port 5000
 
-# after running this server run "ngrok http 5000"  in another terminal to expose port 5000     
+# after running this server run "ngrok http 5000" or "sudo systemctl start cloudflared" based on your
+# installation in another terminal to expose port 5000 to the internet
 
 from flask import Flask, Response
 from picamera2 import Picamera2

@@ -57,7 +57,7 @@ You will need two separate SSH windows connected to your Pi for this.
 
 -   **In Terminal 1**, start the video server:
     ```bash
-    python3 server_script.py
+    python server_script.py
     ```
 
 -   **In Terminal 2**, start the ngrok tunnel to expose port 5000:
