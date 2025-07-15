@@ -1,6 +1,6 @@
-# Raspberry Pi to Colab Video Streaming
+# Raspberry Pi Video Streaming to a URL
 
-There are two methods creating a server first is via python script and second is via mediamtx. The Python script to run the server on the Pi is `server_script.py`, and the code to view the stream in Colab is in `colab_setup.py`. If you want to use really fast, low latency, highely optimized, peer to peer connection which streams 24/7 then use the **Mediamtx** setup guide to setup the server, for both server setup you have to create a tunnel either by cloudflare or ngrok.
+There are two methods creating a server first is via python script and second is via mediamtx. The Python script to run the server on the Pi is `server_script.py`, and the code to view the stream in Colab or kaggle is in `colab_setup.py`. If you want to use really fast, low latency, highely optimized, peer to peer connection which streams 24/7 then use the **Mediamtx** setup guide to setup the server, for both server setup you have to create a tunnel either by cloudflare or ngrok.
 
 # Python Server Setup
 
