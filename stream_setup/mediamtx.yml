@@ -1,0 +1,32 @@
+# mediamtx.yml
+    # Configuration for a high-quality Raspberry Pi video stream.
+
+    # We will serve the WebRTC/HTTP stream on port 5000.
+    webrtcAddress: :5000
+
+    # Define the stream paths available to clients.
+    paths:
+      # Enter your /path  name here it will be https://<your_url>.com/your_path
+      your_path:
+        # Tell MediaMTX to use the desired camera as the source.
+        source: rpiCamera
+
+        # Set a resolution you like.
+        rpiCameraWidth: 1280
+        rpiCameraHeight: 720
+
+        # Set framerate.
+        rpiCameraFPS: 30
+
+        # Bitrate is key for quality. 2,000,000 = 2 Mbps.
+        # Increase for higher quality, decrease if your network struggles.
+        rpiCameraBitrate: 2000000
+
+        # Set the H.264 profile for better compression efficiency.
+        rpiCameraProfile: high
+
+        rpiCameraDenoise: cdn_hq
+
+        # uncomment these lines below to flip the camera image if it's mounted upside down.
+        # rpiCameraHFlip: true
+        # rpiCameraVFlip: true

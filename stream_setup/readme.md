@@ -1,21 +1,10 @@
 # Raspberry Pi to Colab Video Streaming
 
-The Python script to run the server on the Pi is `server_script.py`, and the code to view the stream in Colab is in `colab_setup.py`.
+There are two methods creating a server first is via python script and second is via mediamtx. The Python script to run the server on the Pi is `server_script.py`, and the code to view the stream in Colab is in `colab_setup.py`. If you want to use really fast, low latency, highely optimized, peer to peer connection which streams 24/7 then use the **Mediamtx** setup guide to setup the server, for both server setup you have to create a tunnel either by cloudflare or ngrok.
 
-We will cover two methods to create a secure tunnel from your Pi to the internet:
-1.  **ngrok**
-2.  **Cloudflare Tunnel**
+# Python Server Setup
 
-## Prerequisites
-
-- A Raspberry Pi (I used it on Raspberry Pi Zero 2W) with Raspberry Pi OS Lite.
-- A camera module connected and enabled on the Pi.
-- The Pi is connected to the internet.
-- You are able to connect to your Pi via SSH from your main computer.
-
-## Initial Server Setup (Common for Both Methods)
-
-Before choosing a tunneling method, you need to set up the video server on your Raspberry Pi.
+Using you need can set up the video server on your Raspberry Pi.
 
 1.  **Connect to your Pi via SSH.**
 
@@ -30,6 +19,48 @@ Before choosing a tunneling method, you need to set up the video server on your 
 
 3.  **Place the Script:**
     Make sure the `server_script.py` file is on your Raspberry Pi (e.g., in your home directory). This script will start a local web server on port 5000 that streams the camera feed.
+
+
+# MediaMTX  Server Setup
+
+This provides a detailed process for setting up a high-quality, low-latency, and CPU-efficient video stream from a Raspberry Pi Camera (for other cameras and devices check MediaMTX Github: [MediaMTX](https://github.com/bluenviron/mediamtx)) using MediaMTX.
+
+This setup is ideal for remote monitoring, AI/ML analysis on a remote server, or any project that requires a stable video feed accessible from anywhere.
+
+### OS requirements
+- Raspberry Pi OS installed (Bullseye or Bookworm only).
+
+---
+
+### Download MediaMTX
+1.  Find the latest release for your Pi's architecture from the [MediaMTX GitHub Releases page](https://github.com/bluenviron/mediamtx/releases).
+    - For a 64-bit OS, download the file ending in `linux_arm64.tar.gz`.
+    - For a 32-bit OS, download the file ending in `linux_armv7.tar.gz`.
+2.  Download and extract it on your Pi:
+    ```bash
+    tar -xvzf mediamtx_v1.13.0_linux_arm64.tar.gz
+    ```
+
+-  Replace the configuration/code file with the one provided named `mediamtx.yml` , add your path and edit it according to your needs.
+
+### Run MediaMTX
+1.  From the same directory, start the server:
+    ```bash
+    ./mediamtx
+    ```
+2.  You should see log messages indicating the server has started and the camera is ready.
+
+---
+
+####  Then run the Tunnel as a Service using any of these methods...
+
+---
+
+# Secure Tunnel
+
+We will cover two methods to create a secure tunnel from your Pi to the internet:
+1.  **ngrok**
+2.  **Cloudflare Tunnel**
 
 ---
 
