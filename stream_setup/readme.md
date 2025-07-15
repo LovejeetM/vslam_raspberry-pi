@@ -88,7 +88,7 @@ You will need two separate SSH windows connected to your Pi for this.
 
 -   **In Terminal 1**, start the video server:
     ```bash
-    python server_script.py
+    python server_script.py or ./mediamtx
     ```
 
 -   **In Terminal 2**, start the ngrok tunnel to expose port 5000:
@@ -176,7 +176,7 @@ This is the standard and most reliable way to run the tunnel.
 
 #### Step 4: View the Stream in Colab
 
-1.  On your Pi, start the video server: `python server_script.py`.
+1.  On your Pi, start the video server: `python server_script.py` or `./mediamtx`.
 2.  In your Colab notebook (`colab_setup.py`), update the URL to your permanent Cloudflare address.
     `Stream_URL = "https://rpi-camera.your-domain.com"`
 3.  Run the cell. Your stream should now be live on its permanent address.
