@@ -17,4 +17,6 @@ I have added 2 simple methods for streaming video to google colab and you can us
 
 Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
 
+Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
+
 ---
