@@ -15,6 +15,16 @@ This repo will provide you a way to stream your Raspberry Pi's camera feed direc
 
 I have added 2 simple methods for streaming video to google colab and you can use either ngrok or cloudflare for streaming to your internet url. Python server + Cloudflare works well and gives around 30~ ms - 45 ms latency on average. But Mediamtx + Cloudflare or Ngrok gives even lower latency by streaming using webRTC and making a secure peer to peer conection. While using Mediamtx the Cloudfared and Ngrok are only required to make initial handshake.
 
+#### Added the code to read the MediaMTX stream in colab/kaggle for processing.
+
+It reads the stream frame by frame and updates the latest frame only, there are few settings that must be done in order
+to get `WebRTC/whep` stream frames.
+
+the code to run whep added in:
+```bash 
+    stream.py
+```
+
 Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
 
 Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
