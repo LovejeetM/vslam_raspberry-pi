@@ -25,6 +25,38 @@ the code to run whep added in:
     stream.py
 ```
 
+#### Instructions to run whep:
+
+First change the default port of your tunnel address in `WebRTC config.yml`:
+```bash
+    # add this line, it must be port 8889
+    - hostname: <<   --your host name--    >>
+    service: http://localhost:8889     
+```
+
+Then, add these lines to your `mediamtx.yml`:
+```bash
+webrtcAddress: :8889
+
+webrtcLocalTCPAddress: :8189
+
+webrtcAdditionalHosts: [  --your host name--  ]
+
+
+webrtcICEServers2:
+  - url: stun:stun.l.google.com:19302
+
+# add authentication if needed, but for this you have to add auth header with the initial connection to verify
+# so, I am just setting no auth here, check mediamtx official documentation if you need auth.
+authInternalUsers:
+  - user: any
+    pass:
+    permissions:
+      - action: read
+      - action: publish
+```
+
+
 Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
 
 Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
