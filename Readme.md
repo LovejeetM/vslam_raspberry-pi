@@ -56,6 +56,11 @@ authInternalUsers:
       - action: publish
 ```
 
+---
+Stream Sensor data using: [Stream Data](./sensor_data.py)
+
+---
+
 
 Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
 

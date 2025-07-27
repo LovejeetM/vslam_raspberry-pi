@@ -98,6 +98,6 @@ if __name__ == "__main__":
         uvicorn.run(app, host="0.0.0.0", port=5002)
     finally:
         if TOF_SENSOR:
-            print("Stopping TOF sensor ranging and closing.")
+            print("Stopping TOF sensor.")
             TOF_SENSOR.stop_ranging()
             TOF_SENSOR.close()
