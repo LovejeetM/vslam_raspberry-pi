@@ -1,0 +1,153 @@
+<!-- Demo code for visualizing orientation fot the robot for testing, it can be used with real time
+    sensor data and with timestamps the orientation can be visualized properly    -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPU6050 3D Visualizer</title>
+    <style>
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #1a1a1a; color: #f0f0f0; overflow: hidden; }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            display:block;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+        #data-display {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #4dff94;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <h1>MPU6050 3D Orientation</h1>
+        <p>Visualizing rotation based on sensor data.</p>
+    </div>
+    <div id="data-display">
+        <p><strong>Roll:</strong> <span id="roll">0.00</span>°</p>
+        <p><strong>Pitch:</strong> <span id="pitch">0.00</span>°</p>
+        <p><strong>Yaw:</strong> <span id="yaw">0.00</span>°</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        
+        const ambientLight = new THREE.AmbientLight(0x404040, 2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        
+        const bodyGeometry = new THREE.BoxGeometry(2, 0.2, 3); 
+        const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0x008000, metalness: 0.5, roughness: 0.6 });
+        const robotBody = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        
+        
+        const frontIndicatorGeom = new THREE.BoxGeometry(0.5, 0.3, 0.5);
+        const frontIndicatorMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const frontIndicator = new THREE.Mesh(frontIndicatorGeom, frontIndicatorMat);
+        frontIndicator.position.z = 1.25; 
+        
+        const robotModel = new THREE.Group();
+        robotModel.add(robotBody);
+        robotModel.add(frontIndicator);
+
+        scene.add(robotModel);
+
+        
+        const axesHelper = new THREE.AxesHelper(3);
+        scene.add(axesHelper);
+
+        
+        let currentRotation = { roll: 0, pitch: 0, yaw: 0 }; 
+
+       
+        /*
+        const socket = new WebSocket('ws://<YOUR_RASPBERRY_PI_IP>:8765');
+        socket.onmessage = function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                
+                currentRotation.roll = THREE.MathUtils.degToRad(data.roll);
+                currentRotation.pitch = THREE.MathUtils.degToRad(data.pitch);
+                currentRotation.yaw = THREE.MathUtils.degToRad(data.yaw);
+
+                
+                document.getElementById('roll').textContent = data.roll.toFixed(2);
+                document.getElementById('pitch').textContent = data.pitch.toFixed(2);
+                document.getElementById('yaw').textContent = data.yaw.toFixed(2);
+
+            } catch (e) {
+                console.error("Error parsing sensor data:", e);
+            }
+        };
+        */
+
+        
+        function simulateData() {
+            
+            currentRotation.roll += (Math.random() - 0.5) * 0.01;
+            currentRotation.pitch += (Math.random() - 0.5) * 0.01;
+            currentRotation.yaw += (Math.random() - 0.5) * 0.01;
+
+            
+            document.getElementById('roll').textContent = (currentRotation.roll * 180 / Math.PI).toFixed(2);
+            document.getElementById('pitch').textContent = (currentRotation.pitch * 180 / Math.PI).toFixed(2);
+            document.getElementById('yaw').textContent = (currentRotation.yaw * 180 / Math.PI).toFixed(2);
+        }
+        setInterval(simulateData, 50);
+        
+
+
+        
+        function animate() {
+            requestAnimationFrame(animate);
+
+            
+            const euler = new THREE.Euler(currentRotation.pitch, currentRotation.yaw, currentRotation.roll, 'YXZ');
+            robotModel.setRotationFromEuler(euler);
+
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }, false);
+    </script>
+</body>
+</html>
+
