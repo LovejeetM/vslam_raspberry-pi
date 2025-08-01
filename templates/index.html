@@ -1,0 +1,76 @@
+<!-- This renders a joystick on the webpage and lets you control servo in realtime. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Servo Joystick Control</title>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+        }
+        #joystick-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+             border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="joystick-container"></div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const socket = io();
+
+            const joystickOptions = {
+                zone: document.getElementById('joystick-container'),
+                mode: 'static',
+                position: { left: '50%', top: '50%' },
+                color: '#4169E1',
+                size: 150,
+                threshold: 0.1,
+                fadeTime: 250
+            };
+
+            
+            const manager = nipplejs.create(joystickOptions);
+
+            manager.on('move', function (evt, data) {
+                if (data.vector) {
+                    socket.emit('joystick_move', {
+                        x: data.vector.x,
+                        y: data.vector.y
+                    });
+                }
+            });
+
+            manager.on('end', function (evt) {
+                socket.emit('joystick_move', { x: 0, y: 0 });
+            });
+
+            socket.on('connect', () => {
+                console.log('Connected to server');
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Disconnected from server');
+            });
+        });
+    </script>
+</body>
+</html>

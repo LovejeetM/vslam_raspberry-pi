@@ -59,6 +59,9 @@ authInternalUsers:
 ---
 Stream Sensor data using: [Stream Data](./sensor_data.py)
 
+To check servo movement and control servos from webpage for testing see: [control_servo](./control_servo.py)
+and add templates folder to render the joystick page. 
+
 ---
 
 
