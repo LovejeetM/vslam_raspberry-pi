@@ -1,11 +1,15 @@
 import asyncio
 import json
+import time
+import math
 from datetime import datetime, timezone
 
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from mpu6050 import mpu6050
 import VL53L0X
+
+app = FastAPI()
 
 TOF_SENSOR = None
 MPU_SENSOR = None
@@ -22,7 +26,7 @@ except Exception as e:
 try:
     TOF_SENSOR = VL53L0X.VL53L0X(i2c_bus=1, i2c_address=0x29)
     TOF_SENSOR.open()
-    TOF_SENSOR.start_ranging(VL53L0X.Vl5l3l0xAccuracyMode.LONG_RANGE)
+    TOF_SENSOR.start_ranging(VL53L0X.Vl53l0xAccuracyMode.LONG_RANGE)
     timing = TOF_SENSOR.get_timing()
     if timing < 20000:
         TOF_TIMING = 20000
@@ -36,13 +40,18 @@ except Exception as e:
         TOF_SENSOR.close()
     TOF_SENSOR = None
 
-
-app = FastAPI()
-
+pitch = 0.0
+roll = 0.0
+last_update = time.time()
+alpha = 0.98
 
 async def sensor_data_streamer(websocket: WebSocket):
+    global pitch, roll, last_update
     while True:
         timestamp_utc = datetime.now(timezone.utc).isoformat()
+        current_time = time.time()
+        dt = current_time - last_update
+        last_update = current_time
 
         distance_mm = -1
         if TOF_SENSOR:
@@ -51,21 +60,40 @@ async def sensor_data_streamer(websocket: WebSocket):
             except Exception:
                 distance_mm = -2
 
-        accel_data = None
-        gyro_data = None
+        roll_deg = 0.0
+        pitch_deg = 0.0
+
         if MPU_SENSOR:
             try:
                 accel_data = MPU_SENSOR.get_accel_data()
                 gyro_data = MPU_SENSOR.get_gyro_data()
-            except Exception:
-                accel_data = {"x": -999, "y": -999, "z": -999}
-                gyro_data = {"x": -999, "y": -999, "z": -999}
 
+                accel_x = accel_data['x']
+                accel_y = accel_data['y']
+                accel_z = accel_data['z']
+
+                gyro_x = gyro_data['x']
+                gyro_y = gyro_data['y']
+
+                accel_roll = math.degrees(math.atan2(accel_y, math.sqrt(accel_x**2 + accel_z**2)))
+                accel_pitch = math.degrees(math.atan2(-accel_x, math.sqrt(accel_y**2 + accel_z**2)))
+
+                roll = alpha * (roll + gyro_x * dt) + (1 - alpha) * accel_roll
+                pitch = alpha * (pitch + gyro_y * dt) + (1 - alpha) * accel_pitch
+                
+                roll_deg = roll
+                pitch_deg = pitch
+
+            except Exception as e:
+                roll_deg = -999
+                pitch_deg = -999
+        
         data_packet = {
             "timestamp": timestamp_utc,
             "tof_distance_mm": distance_mm,
-            "accelerometer": accel_data,
-            "gyroscope": gyro_data
+            "roll": roll_deg,
+            "pitch": pitch_deg,
+            "yaw": 0 
         }
 
         await websocket.send_text(json.dumps(data_packet))

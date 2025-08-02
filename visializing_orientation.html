@@ -1,5 +1,10 @@
-<!-- Demo code for visualizing orientation fot the robot for testing, it can be used with real time
-    sensor data and with timestamps the orientation can be visualized properly    -->
+<!-- This lets you connect to the pi and visualize the orientation of the robot for testing, 
+ it can be used with real time sensor data and with timestamps the orientation can be visualized properly -->
+
+<!-- To run first run the stream data script in the pi whcih will start the server on the port 5002,
+ then, connect to that port or tunnel url from your pc by running thhis in live server -->
+
+ <!-- Change the url in the code below... -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +53,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x1a1a1a);
         
@@ -58,19 +62,16 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-
         
         const ambientLight = new THREE.AmbientLight(0x404040, 2);
         scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
-
         
         const bodyGeometry = new THREE.BoxGeometry(2, 0.2, 3); 
         const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0x008000, metalness: 0.5, roughness: 0.6 });
         const robotBody = new THREE.Mesh(bodyGeometry, bodyMaterial);
-        
         
         const frontIndicatorGeom = new THREE.BoxGeometry(0.5, 0.3, 0.5);
         const frontIndicatorMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -82,65 +83,55 @@
         robotModel.add(frontIndicator);
 
         scene.add(robotModel);
-
         
         const axesHelper = new THREE.AxesHelper(3);
         scene.add(axesHelper);
-
         
         let currentRotation = { roll: 0, pitch: 0, yaw: 0 }; 
 
-       
-        /*
-        const socket = new WebSocket('ws://<url>');
+
+        // change the url here, use ws: if connecting in local network.
+        const socket = new WebSocket('wss://YOUR_URL/sensordata');
+
+        socket.onopen = function(event) {
+            console.log("WebSocket connection established.");
+        };
+
         socket.onmessage = function(event) {
             try {
                 const data = JSON.parse(event.data);
-                
-                currentRotation.roll = THREE.MathUtils.degToRad(data.roll);
-                currentRotation.pitch = THREE.MathUtils.degToRad(data.pitch);
-                currentRotation.yaw = THREE.MathUtils.degToRad(data.yaw);
 
-                
-                document.getElementById('roll').textContent = data.roll.toFixed(2);
-                document.getElementById('pitch').textContent = data.pitch.toFixed(2);
-                document.getElementById('yaw').textContent = data.yaw.toFixed(2);
+                if (data.roll !== undefined && data.pitch !== undefined && data.yaw !== undefined) {
+                    currentRotation.roll = THREE.MathUtils.degToRad(data.roll);
+                    currentRotation.pitch = THREE.MathUtils.degToRad(data.pitch);
+                    currentRotation.yaw = THREE.MathUtils.degToRad(data.yaw);
+
+                    document.getElementById('roll').textContent = data.roll.toFixed(2);
+                    document.getElementById('pitch').textContent = data.pitch.toFixed(2);
+                    document.getElementById('yaw').textContent = data.yaw.toFixed(2);
+                }
 
             } catch (e) {
-                console.error("Error parsing sensor data:", e);
+                console.error("Error parsing sensor data from stream:", e, "Received data:", event.data);
             }
         };
-        */
 
-        
-        function simulateData() {
-            
-            currentRotation.roll += (Math.random() - 0.5) * 0.01;
-            currentRotation.pitch += (Math.random() - 0.5) * 0.01;
-            currentRotation.yaw += (Math.random() - 0.5) * 0.01;
+        socket.onerror = function(error) {
+            console.error("WebSocket Error: ", error);
+        };
 
-            
-            document.getElementById('roll').textContent = (currentRotation.roll * 180 / Math.PI).toFixed(2);
-            document.getElementById('pitch').textContent = (currentRotation.pitch * 180 / Math.PI).toFixed(2);
-            document.getElementById('yaw').textContent = (currentRotation.yaw * 180 / Math.PI).toFixed(2);
-        }
-        setInterval(simulateData, 50);
-        
-
-
+        socket.onclose = function(event) {
+            console.log("WebSocket connection closed.", event);
+        };
         
         function animate() {
             requestAnimationFrame(animate);
-
-            
             const euler = new THREE.Euler(currentRotation.pitch, currentRotation.yaw, currentRotation.roll, 'YXZ');
             robotModel.setRotationFromEuler(euler);
-
             renderer.render(scene, camera);
         }
         
         animate();
-
         
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -150,4 +141,3 @@
     </script>
 </body>
 </html>
-
