@@ -24,52 +24,59 @@
             width: 200px;
             height: 200px;
             background: rgba(255, 255, 255, 0.1);
-             border-radius: 50%;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
     <div id="joystick-container"></div>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            const socket = io();
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const socket = new WebSocket(`${protocol}//${window.location.host}/ws`);
 
             const joystickOptions = {
                 zone: document.getElementById('joystick-container'),
                 mode: 'static',
                 position: { left: '50%', top: '50%' },
-                color: '#4169E1',
+                color: '#1E90FF',
                 size: 150,
                 threshold: 0.1,
                 fadeTime: 250
             };
 
-            
             const manager = nipplejs.create(joystickOptions);
+
+            function sendJoystickData(x, y) {
+                if (socket.readyState === WebSocket.OPEN) {
+                    const data = JSON.stringify({ x: x, y: y });
+                    socket.send(data);
+                }
+            }
 
             manager.on('move', function (evt, data) {
                 if (data.vector) {
-                    socket.emit('joystick_move', {
-                        x: data.vector.x,
-                        y: data.vector.y
-                    });
+                    sendJoystickData(data.vector.x, data.vector.y);
                 }
             });
 
             manager.on('end', function (evt) {
-                socket.emit('joystick_move', { x: 0, y: 0 });
+                sendJoystickData(0, 0);
             });
 
-            socket.on('connect', () => {
-                console.log('Connected to server');
-            });
+            socket.onopen = (event) => {
+                console.log('Successfully connected to the WebSocket server.');
+            };
 
-            socket.on('disconnect', () => {
-                console.log('Disconnected from server');
-            });
+            socket.onclose = (event) => {
+                console.log('Disconnected from the WebSocket server.');
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
         });
     </script>
 </body>
