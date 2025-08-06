@@ -23,7 +23,7 @@ pitch = 0.0
 roll = 0.0
 yaw = 0.0
 last_update = time.time()
-alpha = 0.98
+alpha = 0.98    #  0.98
 
 def calibrate_sensors():
     global MPU_SENSOR, gyro_offset, initial_orientation
