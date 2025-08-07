@@ -56,29 +56,55 @@ authInternalUsers:
       - action: publish
 ```
 
-<h3>        </h3>
+<h3>                </h3>
 
-#### Here I am streaming sensor data to the internet and then visualizing it on my laptop:
+### Here I am streaming sensor data to the internet and then visualizing it on my laptop:
 
-<h4>    </h4>
+<h4>           </h4>
 
 https://github.com/user-attachments/assets/7301b8d2-2f2b-4565-8982-16806c876d24
 
-<h3>     </h3>
+<h3>             </h3>
 
 ---
 
-#### Stream Sensor data using: [Stream Data](./sensor_data.py)
+### Stream Sensor data using: [Stream Data](./sensor_data.py)
 
 To check servo movement and control servos from webpage for testing see: [control_servo](./control_servo.py)
 and add templates folder to render the joystick page. 
 
+<h3>            </h3>
+
 ---
 
-<h3>     </h3>
+### The code to calibrate the camera using chackerboard image and open-cv can be found in: [claibrate camera](./calibrate_camera/)
 
-#### Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
+The camera calibration is necessary to know the properties of the camera, which will
+be further beneficial for the depth analysis.
 
-#### Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
+### The properties we get from calibrating camera:
+
+#### Intrinsic parameters:
+
+*   Focal length
+
+*   Optical center (principal point)
+
+*   Lens distortion coefficients (radial and tangential)
+
+#### Extrinsic parameters:
+
+*   Rotation and translation vectors that relate the camera to the world coordinate system
+
+
+<h2>            </h2>
+
+---
+
+<h3>            </h3>
+
+### Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
+
+### Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
 
 ---
