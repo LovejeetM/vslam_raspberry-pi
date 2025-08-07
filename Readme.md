@@ -56,6 +56,13 @@ authInternalUsers:
       - action: publish
 ```
 
+
+Here I am streaming sensor data to the internet and then visualizing it on my laptop:
+
+
+https://github.com/user-attachments/assets/7301b8d2-2f2b-4565-8982-16806c876d24
+
+<h4></h4>
 ---
 Stream Sensor data using: [Stream Data](./sensor_data.py)
 
