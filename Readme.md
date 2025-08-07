@@ -56,24 +56,29 @@ authInternalUsers:
       - action: publish
 ```
 
+<h3>        </h3>
 
-Here I am streaming sensor data to the internet and then visualizing it on my laptop:
+#### Here I am streaming sensor data to the internet and then visualizing it on my laptop:
 
+<h4>    </h4>
 
 https://github.com/user-attachments/assets/7301b8d2-2f2b-4565-8982-16806c876d24
 
-<h4></h4>
+<h3>     </h3>
+
 ---
-Stream Sensor data using: [Stream Data](./sensor_data.py)
+
+#### Stream Sensor data using: [Stream Data](./sensor_data.py)
 
 To check servo movement and control servos from webpage for testing see: [control_servo](./control_servo.py)
 and add templates folder to render the joystick page. 
 
 ---
 
+<h3>     </h3>
 
-Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
+#### Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
 
-Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
+#### Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
 
 ---
