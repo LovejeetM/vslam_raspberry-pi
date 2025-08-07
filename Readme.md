@@ -77,7 +77,7 @@ and add templates folder to render the joystick page.
 
 ---
 
-### The code to calibrate the camera using chackerboard image and open-cv can be found in: [claibrate camera](./calibrate_camera/)
+### The code to calibrate the camera using chackerboard images can be found in: [claibrate camera.](./calibrate_camera/)
 
 The camera calibration is necessary to know the properties of the camera, which will
 be further beneficial for the depth analysis.
@@ -97,13 +97,13 @@ be further beneficial for the depth analysis.
 *   Rotation and translation vectors that relate the camera to the world coordinate system
 
 
-<h2>            </h2>
+<h3>            </h3>
 
 ---
 
 <h3>            </h3>
 
-### Follow the setup for setting up the stream either by pyhton or mediamtx: [Stream Setup](./stream_setup/)
+### Follow the setup for setting up the stream either by python or mediamtx: [Stream Setup](./stream_setup/)
 
 ### Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
 
