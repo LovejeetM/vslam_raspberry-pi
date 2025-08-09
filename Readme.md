@@ -108,3 +108,82 @@ be further beneficial for the depth analysis.
 ### Follow link for more info about the mediamtx stream: [MediaMTX](https://github.com/bluenviron/mediamtx)
 
 ---
+
+
+## Depth Estimation Models I tested on my Live Stream Setup
+
+My primary focus was on balancing speed, quality, and suitability for live depth estimation within my specific hardware and processing environment. Models were sourced and downloaded from the Hugging Face `transformers` library.
+The code to the corresponding models can be found in [Depth Live](./Depth_live.ipynb), [Depth analysis](./Depth_analysis.ipynb).
+
+---
+
+### **Model Performance Findings**
+
+---
+
+### **`vinvino02/glpn-kitti`**
+
+*   **Speed:** Exceptionally high speed.
+*   **Quality:** Lower depth quality, with noticeable blurriness and inaccurate, "off" edges.
+*   **Suitability:** While very fast, its significant quality compromises make it less ideal for applications requiring precise depth or clean object boundaries.
+
+---
+
+### **`vinvino02/glpn-nyu`**
+
+*   **Speed:** Retains the high speed characteristic of the `glpn` family.
+*   **Quality:** Good overall depth quality, a significant improvement over the Kitti variant. However, edges can still appear slightly off or less defined occasionally.
+*   **Suitability:** A strong contender for live applications due to its speed, offering a better quality than `glpn-kitti`.
+
+---
+
+### **`apple/DepthPro-hf`**
+
+*   **Speed:** Slow processing.
+*   **Quality:** Delivers incredible, unparalleled depth quality – the best observed in terms of detail and accuracy.
+*   **Suitability:** Due to its prohibitive processing time, this model is currently unfeasible for real-time, live depth estimation on this setup. It's best suited for more powerful GPU's or applications where quality is paramount and speed is not a constraint.
+
+---
+
+### **`Intel/dpt-large`**
+
+*   **Speed:** Good speed, noticeably slower than `depth-anything-small-hf` but generally faster than `Depth-Pro-hf`.
+*   **Quality:** Provides good overall depth quality.
+*   **Size:** A larger model, which contributes to its slightly slower performance compared to smaller, optimized models.
+*   **Suitability:** A viable option if quality is prioritized and medium speed is needed, offering a good balance for many applications that aren't strictly real-time.
+
+---
+
+### **`LiheYoung/depth-anything-large-hf`**
+
+*   **Speed:** Similar to `Intel/dpt-large`, but significantly faster than `apple/depth-pro`. It sits in a moderate speed tier.
+*   **Quality:** Great depth quality, striking a good balance between detail and performance.
+*   **Suitability:** A solid choice for scenarios where good quality is essential and some processing latency is acceptable, acting as a middle ground in terms of speed and quality.
+
+---
+
+### **`LiheYoung/depth-anything-small-hf`**
+
+*   **Speed:** Fast processing.
+*   **Quality:** Surprisingly accurate and detailed depth output for its compact size and high speed.
+*   **Size:** A remarkably small model.
+*   **Suitability:** **Currently the best model for live depth estimation** on my specific Raspberry Pi to Google Colab streaming setup. Its combination of high speed, excellent accuracy, and small model size makes it ideal for real-time applications where resource efficiency is key.
+
+---
+
+For optimal real-time performance on my **Raspberry Pi to Google Colab/ Kaggle streaming setup**, **`LiheYoung/depth-anything-small-hf`** stands out as the most suitable model, offering an excellent balance of speed and surprisingly accurate depth output.
+
+---
+
+### Hugging Face Model Links
+
+Find more details and download these models directly from Hugging Face:
+
+*   [`vinvino02/glpn-kitti`](https://huggingface.co/vinvino02/glpn-kitti)
+*   [`vinvino02/glpn-nyu`](https://huggingface.co/vinvino02/glpn-nyu)
+*   [`Intel/dpt-large`](https://huggingface.co/Intel/dpt-large)
+*   [`apple/DepthPro-hf`](https://huggingface.co/apple/DepthPro-hf)
+*   [`LiheYoung/depth-anything-large-hf`](https://huggingface.co/LiheYoung/depth-anything-large-hf)
+*   [`LiheYoung/depth-anything-small-hf`](https://huggingface.co/LiheYoung/depth-anything-small-hf)
+
+---
