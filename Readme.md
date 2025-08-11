@@ -118,6 +118,8 @@ be further beneficial for the depth analysis.
 My primary focus was on balancing speed, quality, and suitability for live depth estimation within my specific hardware and processing environment. Models were sourced and downloaded from the Hugging Face `transformers` library.
 The code to the corresponding models can be found in [Depth Live](./Depth_live.ipynb), [Depth analysis](./Depth_analysis.ipynb).
 
+![depth_analysis](https://github.com/user-attachments/assets/5bd232ce-a0af-4702-84fc-6514217eb2d4)
+
 ---
 
 ### **Model Performance Findings**
