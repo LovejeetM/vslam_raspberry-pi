@@ -122,10 +122,6 @@ The code to the corresponding models can be found in [Depth Live](./Depth_live.i
 
 ---
 
-https://github.com/user-attachments/assets/e5217cc9-6bf2-476f-b52d-5c416b8528a0
-
----
-
 ### **Model Performance Findings**
 
 ---
@@ -181,6 +177,10 @@ https://github.com/user-attachments/assets/e5217cc9-6bf2-476f-b52d-5c416b8528a0
 ---
 
 For optimal real-time performance on my **Raspberry Pi to Google Colab/ Kaggle streaming setup**, **`LiheYoung/depth-anything-small-hf`** stands out as the most suitable model, offering an excellent balance of speed and surprisingly accurate depth output.
+
+---
+
+https://github.com/user-attachments/assets/e5217cc9-6bf2-476f-b52d-5c416b8528a0
 
 ---
 
