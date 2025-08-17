@@ -14,3 +14,4 @@ def calculate_scaled_depth_map(relative_depth_map, lidar_distance_m, aoi_size=5)
     scale_factor = lidar_distance_m / relative_depth_at_center
     absolute_depth_map = relative_depth_map.astype(np.float32) * scale_factor
     return absolute_depth_map
+
