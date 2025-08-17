@@ -180,6 +180,10 @@ For optimal real-time performance on my **Raspberry Pi to Google Colab/ Kaggle s
 
 ---
 
+https://github.com/user-attachments/assets/e5217cc9-6bf2-476f-b52d-5c416b8528a0
+
+---
+
 ### Hugging Face Model Links
 
 Find more details and download these models directly from Hugging Face:
