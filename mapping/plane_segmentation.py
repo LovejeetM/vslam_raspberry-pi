@@ -103,3 +103,4 @@ try:
 
 finally:
     visualizer.close()
+    
